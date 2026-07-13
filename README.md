@@ -88,6 +88,8 @@ Players must find 4 authorization codes hidden across the first 4 modules, then 
 
 See [CREATION-INSTRUCTIONS.md](CREATION-INSTRUCTIONS.md) for the full step-by-step guide.
 
+Before setup day, run the event preflight checklist in [EVENT-PREREQS.md](EVENT-PREREQS.md).
+
 **Quick start:**
 
 1. Clone this repo and [microsoft/skills-for-fabric](https://github.com/microsoft/skills-for-fabric) as sibling folders
