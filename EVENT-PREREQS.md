@@ -8,16 +8,9 @@ This checklist is sourced from the `next-bis-day` repo prerequisites and adapted
 - Contributor or Member role on the workspace
 - Power BI Pro license
 - Power BI Desktop installed
+- GitHub account linked to the Next GitHub Enterprise license
 - GitHub Copilot license
 - Azure CLI installed
-- Tenant settings that allow:
-  - Lakehouse
-  - Notebook/Spark jobs
-  - Eventhouse/KQL
-  - Semantic model authoring
-  - Data Agent
-  - OrgApp
-  - Sharing/publishing
 
 ## Run Local Preflight
 
@@ -33,4 +26,4 @@ Or in Windows PowerShell:
 powershell -ExecutionPolicy Bypass -File .\scripts\check-event-prereqs.ps1
 ```
 
-The script checks local tooling and sign-in status, then prints manual checks for Fabric permissions/licensing/tenant settings.
+The script checks local tooling and sign-in status, then prints manual checks for Fabric permissions and licensing.
