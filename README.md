@@ -10,9 +10,16 @@ This repo includes the minimum files to:
 ## Required Permissions
 
 - Step 1, complete the template: no admin permissions required. You only need the participant email addresses and permission to edit the workbook.
-- Step 2, run the security group script locally: you must be able to sign in with `az login` and have Entra permissions to create security groups, look up users, and add members to groups.
-- Step 3, run the Fabric workspace notebook: you must have permission to create workspaces, assign them to the target capacity, and add role assignments for the team security groups. You also need access to the Lakehouse used to store `teams-resolved.xlsx`.
+- Step 2, run the security group script locally: you must be able to sign in with `az login` and have **Entra permissions to create security groups, look up users, and add members to groups**.
+- Step 3, run the Fabric workspace notebook: you must have **Fabric permissions to create workspaces**, **assign workspaces to the target capacity**, and **add workspace role assignments for the team security groups**. You also need access to the Lakehouse used to store `teams-resolved.xlsx`.
 - Step 4, run the prerequisites check script: no admin permissions are required, but you need access to the local machine and the ability to sign in to the tools the script validates.
+
+Most important blockers:
+
+- **Entra group management permissions** for the local security group step
+- **Fabric workspace creation permissions** for the notebook step
+- **Capacity assignment permissions** for the target Fabric capacity
+- **Permission to grant workspace access to Entra groups** during role assignment
 
 ## Files in this Repo
 
