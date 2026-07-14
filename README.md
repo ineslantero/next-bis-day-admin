@@ -19,6 +19,12 @@ This repo includes the minimum files to:
 
 Open `teams-template.xlsx` and fill one row per team member.
 
+Where to save it:
+
+- Keep the completed file in the repo root, next to `01-create-security-groups.py`.
+- The simplest option is to edit the included `teams-template.xlsx` file in place and save it with the same name.
+- If you save it with a different name or in a different folder, you must pass that path to the local script with `--input`.
+
 Required columns:
 
 - `TeamName`: Team identifier used for workspace and group naming (for example: `team1`, `team2`).
@@ -47,6 +53,17 @@ az login
 python .\01-create-security-groups.py --input teams-template.xlsx --output teams-resolved.xlsx --prefix bis-day
 ```
 
+How the script finds the Excel file:
+
+- By default, the script reads the path passed in `--input`.
+- In the example above, `teams-template.xlsx` means the file is expected in the current working directory.
+- If you run the command from the repo root, the script will find `teams-template.xlsx` and write `teams-resolved.xlsx` back to the repo root.
+- If your file is elsewhere, use a relative or absolute path, for example:
+
+```powershell
+python .\01-create-security-groups.py --input .\my-folder\teams-template.xlsx --output .\my-folder\teams-resolved.xlsx --prefix bis-day
+```
+
 Expected result:
 
 - Security groups are created or reused as `sg-bis-day-<TeamName>`.
@@ -60,12 +77,18 @@ Run `02-create-workspaces.ipynb` in Fabric.
 Before running:
 
 1. Attach the target Lakehouse.
-2. Upload `teams-resolved.xlsx` to Lakehouse `Files`.
+2. Upload the `teams-resolved.xlsx` file produced by the local script to Lakehouse `Files`.
 3. Confirm notebook config values:
 	- `EXCEL_PATH = "Files/teams-resolved.xlsx"`
 	- `WORKSPACE_PREFIX` as needed
 	- `CAPACITY_ID` set to your capacity GUID
 	- `DRY_RUN = False` when ready to execute
+
+How the notebook finds the Excel file:
+
+- The notebook reads the file from the Lakehouse path in `EXCEL_PATH`.
+- With `EXCEL_PATH = "Files/teams-resolved.xlsx"`, it expects the workbook to be uploaded to the root of the Lakehouse `Files` area.
+- If you upload it into a subfolder, update `EXCEL_PATH` to match, for example `Files/admin-input/teams-resolved.xlsx`.
 
 Then run all notebook cells.
 
@@ -90,4 +113,4 @@ Alternative (Windows PowerShell):
 powershell -ExecutionPolicy Bypass -File .\scripts\check-event-prereqs.ps1
 ```
 
-The script validates local tooling/sign-in and prints manual checks for licensing, permissions, and tenant settings.
+The script validates local tooling and sign-in status, then prints any remaining manual checks.
