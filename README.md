@@ -7,7 +7,7 @@ This repo provides a complete **Fabric-based workflow** to set up team workspace
 All work happens **in Fabric notebooks** — no local setup needed!
 
 ```
-Create admin workspace → Upload Excel → Run Notebooks → Clean up after event
+Create admin workspace → Add Lakehouse → Upload Excel → Import Notebooks → Run
 ```
 
 ### What It Does
@@ -20,15 +20,9 @@ Create admin workspace → Upload Excel → Run Notebooks → Clean up after eve
 
 ---
 
-## 🚀 Quick Start (5 minutes)
+## 🚀 Quick Start
 
-1. **See [SETUP-GUIDE.md](SETUP-GUIDE.md)** for detailed step-by-step instructions
-2. **Key steps:**
-   - Create a Fabric workspace named `next-bis-day-admin`
-   - Add a Lakehouse to it
-   - Upload & update `teams-template.xlsx` with real team emails
-   - Copy the 3 notebook files into Fabric
-   - Run notebooks in order: 01 → 02 (optional) → 03
+Follow [**SETUP-GUIDE.md**](SETUP-GUIDE.md) for full step-by-step instructions.
 
 ---
 
@@ -36,12 +30,11 @@ Create admin workspace → Upload Excel → Run Notebooks → Clean up after eve
 
 | File | Purpose | Where |
 |------|---------|-------|
+| **teams-template.xlsx** | Excel template for team/member definitions | Download → Edit → Upload to Lakehouse |
+| **01-create-workspaces.ipynb** | Create workspaces & add users | Import & Run in Fabric |
+| **02-add-security-group-viewer.ipynb** | Add security group as Viewer (optional) | Import & Run in Fabric |
+| **03-cleanup-workspaces.ipynb** | Delete workspaces after event | Import & Run in Fabric |
 | **SETUP-GUIDE.md** | Detailed setup instructions | Read locally |
-| **teams-template.xlsx** | Excel template (10 teams × 5 people) | Upload to Lakehouse |
-| **01-create-workspaces.ipynb** | Create workspaces & add users | Run in Fabric |
-| **02-add-security-group-viewer.ipynb** | Add security group as Viewer (optional) | Run in Fabric |
-| **03-cleanup-workspaces.ipynb** | Delete workspaces after event | Run in Fabric |
-| **_deprecated/** | Old local Python scripts (reference) | — |
 
 ---
 
@@ -98,11 +91,11 @@ All other settings are pre-configured and reference files in the Lakehouse.
 
 ## 🆘 Support
 
-**First time?** Start here: [SETUP-GUIDE.md](SETUP-GUIDE.md)
+**First time?** Follow the [SETUP-GUIDE.md](SETUP-GUIDE.md) step by step.
 
-**Troubleshooting?** See the troubleshooting section in SETUP-GUIDE.md
+**Troubleshooting?** Check the inline notebook comments and the Troubleshooting section in the setup guide.
 
-**Questions?** Check the inline notebook comments for detailed explanations.
+**Questions?** Each notebook has markdown cells explaining every step.
 
 ---
 
