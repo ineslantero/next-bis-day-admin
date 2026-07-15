@@ -71,6 +71,29 @@ Now update the Excel file with real data:
 | team02 | frank@company.com |
 | ... | ... |
 
+## 4️⃣ Download & Import Notebooks to Admin Workspace
+
+You have three notebooks to run in sequence:
+
+| Notebook | Purpose |
+|----------|----------|
+| **01-create-workspaces.ipynb** | Create workspaces & add individual users |
+| **02-add-security-group-viewer.ipynb** | (Optional) Add security group as Viewer |
+| **03-cleanup-workspaces.ipynb** | Delete workspaces after event |
+
+### Import Notebooks via Upload
+
+1. In your admin workspace, go to the **Data Engineering** home (or workspace home)
+2. Click **Import notebook** → **From this computer**
+3. Download the `.ipynb` files from [this repo](https://github.com/ineslantero/next-bis-day-admin):
+   - `01-create-workspaces.ipynb`
+   - `02-add-security-group-viewer.ipynb`
+   - `03-cleanup-workspaces.ipynb`
+4. Select all three `.ipynb` files and click **Upload**
+5. Once imported, the notebooks appear in your workspace ready to configure and run
+
+> **Alternatively:** You can open each notebook in the repo on GitHub, copy the raw code, create a new notebook in Fabric, and paste the content.
+
 ## 5️⃣ Run: Step 1 — Create Workspaces
 
 1. Open **`01-create-workspaces`** notebook
