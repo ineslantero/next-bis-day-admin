@@ -18,31 +18,7 @@ Follow these steps to set up the admin workspace and run all notebooks in Fabric
 
 The workspace now has a Lakehouse where you'll store Excel files and notebooks.
 
-## 3️⃣ Download & Import Notebooks to Admin Workspace
-
-You have three notebooks to run in sequence:
-
-| Notebook | Purpose |
-|----------|---------|
-| **01-create-workspaces.ipynb** | Create workspaces & add individual users |
-| **02-add-security-group-viewer.ipynb** | (Optional) Add security group as Viewer |
-| **03-cleanup-workspaces.ipynb** | Delete workspaces after event |
-
-### Import Notebooks
-
-1. In your admin workspace, click **+ New item** → **Notebook**
-2. Name it: **`01-create-workspaces`**
-3. In the notebook editor, click the **gear icon** (settings) → **Source**
-4. Copy-paste the content from `01-create-workspaces.ipynb` from this repo
-5. Click **OK** or **Save**
-
-Repeat for:
-- **`02-add-security-group-viewer`** (copy from `02-add-security-group-viewer.ipynb`)
-- **`03-cleanup-workspaces`** (copy from `03-cleanup-workspaces.ipynb`)
-
-> **Tip:** You can also download the `.ipynb` files from the repo and drag-drop them directly into Fabric workspace.
-
-## 4️⃣ Upload & Update Excel Template
+## 3️⃣ Upload & Update Excel Template
 
 1. In your admin workspace, open the **Lakehouse**
 2. Click **Files** in the explorer pane (left side)
@@ -71,7 +47,7 @@ Now update the Excel file with real data:
 | team02 | frank@company.com |
 | ... | ... |
 
-## 4️⃣ Download & Import Notebooks to Admin Workspace
+## 4️⃣ Download & Import Notebooks
 
 You have three notebooks to run in sequence:
 
@@ -94,7 +70,7 @@ You have three notebooks to run in sequence:
 
 > **Alternatively:** You can open each notebook in the repo on GitHub, copy the raw code, create a new notebook in Fabric, and paste the content.
 
-## 5️⃣ Run: Step 1 — Create Workspaces
+## 5️⃣ Run: Create Workspaces
 
 1. Open **`01-create-workspaces`** notebook
 2. **Edit configuration:**
@@ -108,7 +84,7 @@ You have three notebooks to run in sequence:
 
 **Output:** `teams-resolved.xlsx` file saved to Lakehouse with all workspace IDs
 
-## 6️⃣ Run: Step 2 — Add Security Group (Optional)
+## 6️⃣ Run: Add Security Group (Optional)
 
 If you want observers/admins to view all team workspaces:
 
@@ -123,7 +99,7 @@ If you want observers/admins to view all team workspaces:
 
 **Result:** The security group now has **Viewer** access to all team workspaces
 
-## 7️⃣ Run: Step 3 — Cleanup (After Event)
+## 7️⃣ Run: Cleanup (After Event)
 
 When the event is over, delete all team workspaces:
 
