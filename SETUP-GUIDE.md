@@ -16,9 +16,33 @@ Follow these steps to set up the admin workspace and run all notebooks in Fabric
 3. Name it: **`admin-data`** (or any name you prefer)
 4. Click **Create**
 
-The workspace now has a Lakehouse where you'll upload and store Excel files.
+The workspace now has a Lakehouse where you'll store Excel files and notebooks.
 
-## 3️⃣ Upload & Update Excel Template
+## 3️⃣ Download & Import Notebooks to Admin Workspace
+
+You have three notebooks to run in sequence:
+
+| Notebook | Purpose |
+|----------|---------|
+| **01-create-workspaces.ipynb** | Create workspaces & add individual users |
+| **02-add-security-group-viewer.ipynb** | (Optional) Add security group as Viewer |
+| **03-cleanup-workspaces.ipynb** | Delete workspaces after event |
+
+### Import Notebooks
+
+1. In your admin workspace, click **+ New item** → **Notebook**
+2. Name it: **`01-create-workspaces`**
+3. In the notebook editor, click the **gear icon** (settings) → **Source**
+4. Copy-paste the content from `01-create-workspaces.ipynb` from this repo
+5. Click **OK** or **Save**
+
+Repeat for:
+- **`02-add-security-group-viewer`** (copy from `02-add-security-group-viewer.ipynb`)
+- **`03-cleanup-workspaces`** (copy from `03-cleanup-workspaces.ipynb`)
+
+> **Tip:** You can also download the `.ipynb` files from the repo and drag-drop them directly into Fabric workspace.
+
+## 4️⃣ Upload & Update Excel Template
 
 1. In your admin workspace, open the **Lakehouse**
 2. Click **Files** in the explorer pane (left side)
@@ -46,27 +70,6 @@ Now update the Excel file with real data:
 | team01 | eve@company.com |
 | team02 | frank@company.com |
 | ... | ... |
-
-## 4️⃣ Copy Notebooks to Admin Workspace
-
-You have three notebooks to run in sequence:
-
-| Notebook | Purpose |
-|----------|---------|
-| **01-create-workspaces.ipynb** | Create workspaces & add individual users |
-| **02-add-security-group-viewer.ipynb** | (Optional) Add security group as Viewer |
-| **03-cleanup-workspaces.ipynb** | Delete workspaces after event |
-
-### Upload Notebooks
-
-1. In your admin workspace, click **+ New item** → **Notebook**
-2. Name it: **`01-create-workspaces`**
-3. Copy-paste the content from `01-create-workspaces.ipynb` from this repo
-4. Click **OK**
-
-Repeat for:
-- **`02-add-security-group-viewer`**
-- **`03-cleanup-workspaces`**
 
 ## 5️⃣ Run: Step 1 — Create Workspaces
 
