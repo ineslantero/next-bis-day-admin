@@ -2,52 +2,170 @@
 
 This repo includes the minimum files to:
 
-- Prepare team input in a template workbook
-- Create or reuse Entra security groups locally
-- Create or reuse Fabric workspaces from the resolved workbook
-- Run prerequisites and local preflight checks
+- Prepare team input in a template workbook (10 teams × 5 people each)
+- Create Fabric workspaces per team
+- Add individual users directly to workspaces as Members
+- Optionally add a security group as Viewer to all workspaces
+- Clean up workspaces when done
+
+## Workflow Overview
+
+```
+Step 1: Fill Excel template → Step 2: Create workspaces & add users → Step 3: Add security group viewer → Step 4: Cleanup
+```
+
+### Step 1: Complete the Team Template ✅
+
+Open `teams-template.xlsx` and update it with real email addresses. The template includes 10 teams with 5 people per team (sample data).
+
+**Required columns:**
+- `TeamName`: Team identifier (example: `team01`, `team02`, ... `team10`)
+- `MemberEmail`: Email address of each participant (example: `alice@company.com`)
+
+**Rules:**
+- Repeat the same `TeamName` across multiple rows for each team member
+- Use valid user emails that exist in your Entra tenant
+
+### Step 2: Create Workspaces & Add Individual Users ⚡
+
+Run the Python script locally. It will:
+1. Create a Fabric workspace for each team (prefixed with `bis-day-`)
+2. Assign the workspace to your Fabric capacity
+3. Add each team member directly as a **Member** to their team workspace
+
+**Usage:**
+```bash
+# Preview changes (recommended first)
+python 01-create-workspaces.py --dry-run
+
+# Create workspaces and add users
+python 01-create-workspaces.py
+
+# Custom input file
+python 01-create-workspaces.py --input path/to/teams.xlsx
+```
+
+**Output:**
+- `teams-resolved.xlsx`: Records of all workspaces created and members added
+
+**Requirements:**
+- Python 3.8+ with pandas and requests
+- Azure CLI installed and authenticated: `az login`
+- Fabric workspace creation permissions in your tenant
+- Capacity assignment permissions
+
+### Step 3: Add Security Group as Viewer (Optional) 🔐
+
+After workspaces are created, optionally add a security group (e.g., for event observers) as **Viewer** to all team workspaces.
+
+**Usage:**
+1. Open `02-add-security-group-viewer.ipynb` in Fabric
+2. Edit configuration:
+   - `RESULTS_FILE`: Path to `teams-resolved.xlsx` in Lakehouse
+   - `SECURITY_GROUP_ID`: Entra group ID to add
+   - `SECURITY_GROUP_NAME`: Display name of the group
+   - `DRY_RUN`: Set to `False` to make changes
+3. Run all cells
+
+**Example:** Add all event observers as Viewer to watch team progress
+```
+SECURITY_GROUP_ID = "12345678-1234-1234-1234-123456789012"
+SECURITY_GROUP_NAME = "Event-Observers"
+DRY_RUN = False
+```
+
+### Step 4: Cleanup — Delete Workspaces 🧹
+
+After the event, delete all team workspaces.
+
+**Usage:**
+```bash
+# Preview deletions (recommended first)
+python 03-cleanup-workspaces.py --dry-run
+
+# Delete all workspaces (with confirmation prompt)
+python 03-cleanup-workspaces.py
+
+# Skip confirmation
+python 03-cleanup-workspaces.py --yes
+
+# Custom input file
+python 03-cleanup-workspaces.py --input path/to/teams-resolved.xlsx
+```
+
+**Requirements:**
+- Azure CLI authenticated: `az login`
+- Fabric workspace deletion permissions
+
+---
+
+## Files in This Repo
+
+| File | Purpose |
+|------|---------|
+| `teams-template.xlsx` | Excel input file: 10 teams × 5 people (update with real emails) |
+| `01-create-workspaces.py` | Python script: Create workspaces & add individual users |
+| `02-add-security-group-viewer.ipynb` | Fabric notebook: Add security group as Viewer to all workspaces |
+| `03-cleanup-workspaces.py` | Python script: Delete all team workspaces |
+| `teams-resolved.xlsx` | Generated output: Record of created workspaces & members |
+| `scripts/check-event-prereqs.ps1` | Local prerequisites check script |
+| `EVENT-PREREQS.md` | Event prerequisites checklist |
+
+---
 
 ## Required Permissions
 
-- Step 1, complete the template: no admin permissions required. You only need the participant email addresses and permission to edit the workbook.
-- Step 2, run the security group script locally: you must be able to sign in with `az login` and have **Entra permissions to create security groups, look up users, and add members to groups**.
-- Step 3, run the Fabric workspace notebook: you must have **Fabric permissions to create workspaces**, **assign workspaces to the target capacity**, and **add workspace role assignments for the team security groups**. You also need access to the Lakehouse used to store `teams-resolved.xlsx`.
-- Step 4, run the prerequisites check script: no admin permissions are required, but you need access to the local machine and the ability to sign in to the tools the script validates.
+### To run Step 2 (`01-create-workspaces.py`):
+- Azure CLI access with `az login`
+- **Fabric workspace creation permissions** in your tenant
+- **Capacity assignment permissions** to assign workspaces to the target capacity
+- **User role assignment permissions** to add users to workspaces
 
-Most important blockers:
+### To run Step 3 (`02-add-security-group-viewer.ipynb`):
+- Fabric notebook execution permissions
+- Fabric REST API access
+- **Group role assignment permissions** to add security groups to workspaces
 
-- **Entra group management permissions** for the local security group step
-- **Fabric workspace creation permissions** for the notebook step
-- **Capacity assignment permissions** for the target Fabric capacity
-- **Permission to grant workspace access to Entra groups** during role assignment
+### To run Step 4 (`03-cleanup-workspaces.py`):
+- Azure CLI access with `az login`
+- **Fabric workspace deletion permissions** in your tenant
 
-## Files in this Repo
+---
 
-- `teams-template.xlsx`: Input workbook teams should fill in.
-- `01-create-security-groups.py`: Local script that creates/reuses Entra groups and writes `teams-resolved.xlsx`.
-- `02-create-workspaces.ipynb`: Fabric notebook that creates/reuses workspaces and assigns capacity/roles from `teams-resolved.xlsx`.
-- `EVENT-PREREQS.md`: Event prerequisites checklist.
-- `scripts/check-event-prereqs.ps1`: Local prerequisites check script.
+## Quick Start Checklist
 
-## 1) Complete the Team Template
+- [ ] **Step 1:** Update `teams-template.xlsx` with real team names and email addresses
+- [ ] **Step 2:** Run `python 01-create-workspaces.py --dry-run` to preview
+- [ ] **Step 2:** Run `python 01-create-workspaces.py` to create workspaces (watch for output file `teams-resolved.xlsx`)
+- [ ] **Step 3 (Optional):** Run `02-add-security-group-viewer.ipynb` in Fabric to add observer group
+- [ ] **After event:** Run `python 03-cleanup-workspaces.py --dry-run` to preview deletions
+- [ ] **After event:** Run `python 03-cleanup-workspaces.py` to clean up all workspaces
 
-Open `teams-template.xlsx` and fill one row per team member.
+---
 
-Where to save it:
+## Troubleshooting
 
-- Keep the completed file in the repo root, next to `01-create-security-groups.py`.
-- The simplest option is to edit the included `teams-template.xlsx` file in place and save it with the same name.
-- If you save it with a different name or in a different folder, you must pass that path to the local script with `--input`.
+### `az login` fails
+Make sure Azure CLI is installed: `az --version`
+Then authenticate: `az login`
 
-Required columns:
+### `ModuleNotFoundError: No module named 'pandas'`
+Install dependencies:
+```bash
+pip install pandas requests openpyxl
+```
 
-- `TeamName`: Team identifier used for workspace and group naming (for example: `team1`, `team2`).
-- `MemberEmail`: Entra UPN/email for each participant.
+### Workspace creation fails with 400 error
+- The workspace name might already exist. The script will try to reuse it.
+- Check your capacity ID is correct: `CAPACITY_ID` in the script
 
-Rules:
+### Users not added to workspace
+- Verify email addresses are valid Entra users in your tenant
+- Check you have workspace role assignment permissions
 
-- Repeat the same `TeamName` across multiple rows for multiple members on that team.
-- Use valid user emails that exist in your tenant.
+### Can't delete workspaces
+- Make sure `teams-resolved.xlsx` has the correct `WorkspaceId` column
+- Verify you have Fabric workspace deletion permissions
 - Keep team names short and consistent (avoid spaces/special characters when possible).
 
 Example:
