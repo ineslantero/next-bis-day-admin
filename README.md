@@ -31,7 +31,7 @@ Open `teams-template.xlsx` and update it with real email addresses. The template
 Run the Python script locally. It will:
 1. Create a Fabric workspace for each team (prefixed with `bis-day-`)
 2. Assign the workspace to your Fabric capacity
-3. Add each team member directly as a **Member** to their team workspace
+3. Add each team member directly as a **Contributor** to their team workspace
 
 **Usage:**
 ```bash
@@ -67,7 +67,10 @@ After workspaces are created, optionally add a security group (e.g., for event o
    - `DRY_RUN`: Set to `False` to make changes
 3. Run all cells
 
-**Example:** Add all event observers as Viewer to watch team progress
+**Workspace naming:** `bis-day-team01`, `bis-day-team02`, ... `bis-day-team10`
+
+**User roles:**
+- Team members: **Contributor** (can build and edit items)
 ```
 SECURITY_GROUP_ID = "12345678-1234-1234-1234-123456789012"
 SECURITY_GROUP_NAME = "Event-Observers"
@@ -231,6 +234,18 @@ Expected result:
 - Role assignments are applied using each team's `SecurityGroupId`.
 
 ## 4) Prerequisites and Check Script
+
+Use this GitHub Player prerequisite list as the source of truth for event-day setup:
+
+- GitHub account linked to the Next GitHub Enterprise license
+- GitHub Copilot license
+- VS Code installed (CLI available as `code`)
+- Azure CLI installed and signed in (`az login`)
+- Power BI Desktop installed
+- Power BI Pro license
+- `curl` available on PATH
+- `jq` available on PATH
+- `sqlcmd` available on PATH
 
 1. Review prerequisites in `EVENT-PREREQS.md`.
 2. Run the local check script:
