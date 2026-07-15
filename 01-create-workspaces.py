@@ -155,7 +155,7 @@ def get_user_id(token: str, user_email: str) -> str | None:
         return None
 
 
-def add_user_to_workspace(token: str, workspace_id: str, user_email: str, role: str = "Member", dry_run: bool = False) -> bool:
+def add_user_to_workspace(token: str, workspace_id: str, user_email: str, role: str = "Contributor", dry_run: bool = False) -> bool:
     """Add user to workspace with specified role."""
     if dry_run:
         print(f"[DRY RUN] Would add {user_email} as {role} to workspace {workspace_id}")
@@ -262,7 +262,7 @@ def main():
 
         # Add each member to workspace
         for member_email in team_members:
-            add_user_to_workspace(token, workspace_id, member_email, role="Member", dry_run=args.dry_run)
+            add_user_to_workspace(token, workspace_id, member_email, role="Contributor", dry_run=args.dry_run)
 
             # Record result
             results.append({
