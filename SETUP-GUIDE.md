@@ -18,22 +18,28 @@ Follow these steps to set up the admin workspace and run all notebooks in Fabric
 
 The workspace now has a Lakehouse where you'll store Excel files and notebooks.
 
-## 3️⃣ Upload & Update Excel Template
+## 3️⃣ Prepare & Upload Excel Template
+
+### Step 1: Download the template from the repo
+
+1. Go to [this repo](https://github.com/ineslantero/next-bis-day-admin)
+2. Download `teams-template.xlsx` to your computer
+
+### Step 2: Update the Excel file with real data
+
+1. Open `teams-template.xlsx` in Excel and fill in:
+   - **Column A (TeamName)**: Use names like `team01`, `team02`, ... `team10`
+   - **Column B (MemberEmail)**: Real email addresses of participants
+   - Keep the same team name repeated for all 5 members on that team
+2. Save the file
+
+### Step 3: Upload to your Lakehouse
 
 1. In your admin workspace, open the **Lakehouse**
 2. Click **Files** in the explorer pane (left side)
 3. Click **Upload files**
-4. Select `teams-template.xlsx` from this repo
+4. Select the updated `teams-template.xlsx` from your computer
 5. Click **Upload**
-
-Now update the Excel file with real data:
-
-1. Right-click `teams-template.xlsx` → **Download**
-2. Open in Excel and fill in:
-   - **Column A (TeamName)**: Use names like `team01`, `team02`, ... `team10`
-   - **Column B (MemberEmail)**: Real email addresses of participants
-   - Keep the same team name repeated for all 5 members on that team
-3. Save and **upload again** (overwrite the old file)
 
 **Example:**
 
