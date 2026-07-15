@@ -108,6 +108,54 @@ if ($codeAvailable) {
 }
 $results += @{ Name = "Copilot extensions installed"; Passed = ($copilotInstalled -and $copilotChatInstalled); Detail = $copilotDetail }
 
+# 6) curl
+$curlAvailable = Test-CommandAvailable -CommandName "curl"
+$curlDetail = if ($curlAvailable) {
+    try {
+        $curlVersionLine = (curl --version 2>$null | Select-Object -First 1)
+        if ($curlVersionLine) { $curlVersionLine } else { "curl detected" }
+    }
+    catch {
+        "curl detected"
+    }
+}
+else {
+    "curl not found on PATH"
+}
+$results += @{ Name = "curl available"; Passed = $curlAvailable; Detail = $curlDetail }
+
+# 7) jq
+$jqAvailable = Test-CommandAvailable -CommandName "jq"
+$jqDetail = if ($jqAvailable) {
+    try {
+        $jqVersion = jq --version 2>$null
+        if ($jqVersion) { "jq detected ($jqVersion)" } else { "jq detected" }
+    }
+    catch {
+        "jq detected"
+    }
+}
+else {
+    "jq not found on PATH"
+}
+$results += @{ Name = "jq available"; Passed = $jqAvailable; Detail = $jqDetail }
+
+# 8) sqlcmd (Go version)
+$sqlcmdAvailable = Test-CommandAvailable -CommandName "sqlcmd"
+$sqlcmdDetail = if ($sqlcmdAvailable) {
+    try {
+        $sqlcmdVersion = sqlcmd --version 2>$null
+        if ($sqlcmdVersion) { "sqlcmd detected ($sqlcmdVersion)" } else { "sqlcmd detected" }
+    }
+    catch {
+        "sqlcmd detected"
+    }
+}
+else {
+    "sqlcmd not found on PATH (install Go sqlcmd: winget install sqlcmd)"
+}
+$results += @{ Name = "sqlcmd available"; Passed = $sqlcmdAvailable; Detail = $sqlcmdDetail }
+
 Write-Host ""
 Write-Host "=== Local Preflight Results ==="
 foreach ($r in $results) {
